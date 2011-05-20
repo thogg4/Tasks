@@ -1,0 +1,73 @@
+<% title "Tasks for #{@site.name}" %>
+
+<div class="row">
+	
+<div class="sixcol">
+	<div class="title1">TODO</div>
+	<div id="tasks_partial">
+		<%= render :partial => 'one_task_incomplete' %>
+	</div>
+
+
+</div>
+
+
+<div class="sixcol last">
+	<div class="title1">Completed</div>
+	<%= render :partial => 'one_task_complete' %>
+</div>
+
+</div>
+<%= link_to "Bare View", bare_site_tasks_path(@site), :style => "position: fixed; right: 0px; bottom: 0px;" %>
+
+<span style="display: none;" id="get_site_name_from_site" site="<%=@site.name%>"></span>
+
+<div id="new_task_form_wrapper">
+	<div id="new_task_form">
+	</div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+var site_name = "newsminer";
+$(document).ready(function(){
+	var site_name = $("#get_site_name_from_site").attr("site");
+	
+	$("#tasks_list_incomplete").sortable({
+		connectWith: ".tasks_lists",
+		remove: function(event, ui){
+			var task_id = $(ui.item).attr("name");
+			$.post("/sites/"+site_name+"/tasks/"+task_id+"/task_change", $(this).serialize(), null, "script");
+		},
+		receive: function(event, ui){
+			var task_id = $(ui.item).attr("name");
+			$.post("/sites/"+site_name+"/tasks/"+task_id+"/task_change", $(this).serialize(), null, "script");
+		},
+		opacity: "0.9",
+		update: function(){
+			$.ajax({
+				url: "/sites/"+site_name+"/tasks/prioritize_tasks",
+				type: "post",
+				dataType: "script",
+				data: $("#tasks_list_incomplete").sortable("serialize")+"&id=<%=@site.name%>",
+				complete: function(request){
+				},
+			});
+		},
+	});
+	
+	$("#tasks_list_complete").sortable({
+		connectWith: ".tasks_lists",
+		opacity: "0.9",
+		update: function(){
+			$.ajax({
+				url: "/sites/"+site_name+"/tasks/prioritize_tasks",
+				type: "post",
+				dataType: "script",
+				data: $("#tasks_list_complete").sortable("serialize")+"&id=<%=@site.name%>",
+				complete: function(request){
+				},
+			});
+		},
+	});
+});
+</script>

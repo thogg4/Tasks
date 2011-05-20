@@ -1,0 +1,20 @@
+<span class="title2">TODO</span>
+<% @incomplete_tasks.each do |itask| %>
+	<ul>
+		<li><%= itask.name %></li>
+			<ul>
+				<li><%= itask.description %></li>
+			</ul>
+	</ul>
+<% end %>
+<br />
+<br />
+<span class="title2">Complete</span>
+<% @complete_tasks.each do |itask| %>
+	<ul>
+		<li><%= itask.name %></li>
+			<ul>
+				<li><%= itask.description %></li>
+			</ul>
+	</ul>
+<% end %>

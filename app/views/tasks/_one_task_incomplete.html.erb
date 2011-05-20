@@ -1,0 +1,17 @@
+<%= javascript_include_tag "application" %>
+<ul id="tasks_list_incomplete" class="tasks_lists">
+  <% @incomplete_tasks.each do |t| %>
+	<div id="edit_task_box_<%=t.id%>" class="edit_task_box"></div>
+	<div id="view_task_box_<%=t.id%>" class="view_task_box"></div>
+			<% content_tag_for :li, t, :name => "#{t.id}" do %>
+				<span class="title2">
+	     			<%=h truncate(t.name, 45) %>
+				</span>
+				<span class="controls" id="controls_<%=t.id%>" style="float: right;">
+					<%= link_to image_tag("view.png"), site_task_path(@site, t), :class => "view_task_button", :id => "#{t.id}", :site => "#{@site.name}" %>
+     				<%= link_to image_tag("edit.png"), edit_site_task_path(@site, t), :class => "edit_task_button", :id => "#{t.id}", :site => "#{@site.name}" %>
+					<%= link_to image_tag("delete.png"), site_task_path(@site, t), :class => "delete" %>
+				</span>
+			<% end %>
+  <% end %>
+</ul>

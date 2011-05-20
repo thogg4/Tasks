@@ -1,0 +1,18 @@
+<%= javascript_include_tag "application" %>
+<div style="padding: 10px;">
+<% form_for [@site, @task], :html => {:multipart => true} do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, :size => "37" %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :cols => "37" %>
+  </p>
+  <p>
+    <%= f.label :file %><br />
+    <%= f.file_field :file %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+</div>

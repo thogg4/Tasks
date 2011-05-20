@@ -1,0 +1,3 @@
+$("#tasks_partial").empty();
+$("#tasks_partial").html("<%= escape_javascript(render :partial => 'one_task_incomplete', :locals => {:incomplete_tasks => @incomplete_tasks})%>")
+$("#new_task")[0].reset(); 

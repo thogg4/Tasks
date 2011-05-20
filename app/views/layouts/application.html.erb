@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title><%= h(yield(:title) || "Untitled") %></title>
+    <%= stylesheet_link_tag "application" %>
+	<%= javascript_include_tag "jquery", "contextMenu", "jquery-form", "jquery-jaxy", "jquery-ui", "application", :cache => "all" %>
+    <%= yield(:head) %>
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
+	<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+  </head>
+  <body>
+	
+	<div id="header">
+		<li><%= link_to "home", root_path %></li>
+		<span id="outer_new_site_box">
+		<li id="new_site_opened">new site</li>
+		<li id="new_site_closed">new site</li>
+		<div id="new_site_box"></div>
+		</span>
+		<% @sites.each do |site| %>
+			<li><%= link_to "#{site.name}", site_tasks_path(site.name) %></li>
+		<% end %>
+	</div>
+	
+    <div id="container">
+      <%- flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      <%- end -%>
+
+
+      <%= yield %>
+    </div>
+  </body>
+</html>
